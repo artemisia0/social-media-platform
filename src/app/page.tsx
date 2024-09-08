@@ -1,20 +1,12 @@
-'use client'
+import RootPage from '@/components/RootPage'
+import { getDefaultSessionToken } from '@/actions/session'
 
-export default function Page() {
+
+export default async function Page() {
+	const defaultSessionToken = await getDefaultSessionToken()
+
 	return (
-		<div className="w-full flex justify-center items-center h-dvh gap-4">
-			<button className="uk-button uk-button-default">
-				Hello franken ui
-			</button>
-			<button className="uk-button uk-button-primary">
-				Hello franken ui
-			</button>
-			<button className="uk-button uk-button-secondary">
-				Hello franken ui
-			</button>
-		</div>
+		<RootPage defaultSessionToken={defaultSessionToken} />
 	)
 }
-
-
 
