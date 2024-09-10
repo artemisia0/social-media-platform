@@ -5,6 +5,11 @@ import type SessionData from '@/types/SessionData'
 import { ApolloProvider } from '@apollo/client'
 import createGqlClient from '@/graphql/createGqlClient'
 import { useEffect, useState } from 'react'
+import PostsPage from '@/components/PostsPage'
+import ChatsPage from '@/components/ChatsPage'
+import NewPostPage from '@/components/NewPostPage'
+import FindUserPage from '@/components/FindUserPage'
+import MyProfilePage from '@/components/MyProfilePage'
 
 
 export default function RootPage({ defaultSessionToken }: { defaultSessionToken: string; }) {
@@ -32,7 +37,7 @@ export default function RootPage({ defaultSessionToken }: { defaultSessionToken:
 	)
 
 	const gqlClient = createGqlClient(sessionToken ?? defaultSessionToken)
-	if (sessionData.username == null) {
+	if (false && sessionData.username == null) {  // REMOVE 'false &&' later
 		return (
 			<ApolloProvider client={gqlClient}>
 				<div>
@@ -44,8 +49,14 @@ export default function RootPage({ defaultSessionToken }: { defaultSessionToken:
 
 	return (
 		<ApolloProvider client={gqlClient}>
-			<div>
-				{"Sign out"}
+			<div className="min-h-dvh w-full overflow-x-scroll snap-x snap-mandatory scroll-smooth scrollbar-hide">
+				<div className="flex w-[500vw]">
+					<PostsPage sessionData={sessionData} />
+					<ChatsPage sessionData={sessionData} />
+					<NewPostPage sessionData={sessionData} />
+					<FindUserPage sessionData={sessionData} />
+					<MyProfilePage sessionData={sessionData} />
+				</div>
 			</div>
 		</ApolloProvider>
 	)

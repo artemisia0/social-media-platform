@@ -27,6 +27,7 @@ export default {
 		extend: {}
 	},
 	plugins: [
+		require('tailwind-scrollbar-hide'),
 		variables({
 			theme: 'rose'
 		}),
