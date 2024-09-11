@@ -7,6 +7,8 @@ import createGqlClient from '@/graphql/createGqlClient'
 import { useEffect, useState } from 'react'
 import AuthedRootPage from '@/components/AuthedRootPage'
 import NonAuthedRootPage from '@/components/NonAuthedRootPage'
+import darkThemeAtom from '@/atoms/darkThemeAtom'
+import { useAtomValue } from 'jotai'
 
 
 export default function RootPage({ defaultSessionToken }: { defaultSessionToken: string; }) {
@@ -15,6 +17,7 @@ export default function RootPage({ defaultSessionToken }: { defaultSessionToken:
 		username: undefined,
 		userRole: undefined,
 	})
+	const darkTheme = useAtomValue(darkThemeAtom)
 
 	useEffect(
 		() => {
@@ -37,10 +40,12 @@ export default function RootPage({ defaultSessionToken }: { defaultSessionToken:
 
 	return (
 		<ApolloProvider client={gqlClient}>
-			{sessionData.username
-				? <AuthedRootPage sessionData={sessionData} />
-				: <NonAuthedRootPage />
-			}
+			<div className={darkTheme ? 'dark' : ' '}>
+				{sessionData.username
+					? <AuthedRootPage sessionData={sessionData} />
+					: <NonAuthedRootPage />
+				}
+			</div>
 		</ApolloProvider>
 	)
 }

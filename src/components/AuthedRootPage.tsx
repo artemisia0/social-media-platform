@@ -5,7 +5,7 @@ import FindUserPage from '@/components/FindUserPage'
 import MyProfilePage from '@/components/MyProfilePage'
 import { Newspaper, Speech, Plus, Search, User } from 'lucide-react'
 import type SessionData from '@/types/SessionData'
-import { ReactElement, useState, useRef, useEffect } from 'react'
+import { ReactElement, useCallback, useState, useRef, useEffect } from 'react'
 
 
 export default function AuthedRootPage({ sessionData }: { sessionData: SessionData }) {
@@ -18,13 +18,7 @@ export default function AuthedRootPage({ sessionData }: { sessionData: SessionDa
 	const myProfilePageRef = useRef<HTMLDivElement | null>(null)
 	const pageRefs = [postsPageRef, chatsPageRef, newPostPageRef, findUserPageRef, myProfilePageRef]
 
-	const scrollIntoPageWithIndex = (index: number) => {
-		if (pageRefs[index]?.current) {
-			pageRefs[index].current.scrollIntoView({ behavior: 'smooth', inline: 'center' })
-		}
-	}
-
-	const handleScroll = () => {
+	const handleScroll = useCallback(() => {
 		if (scrollContainerRef.current) {
 			const scrollLeft = scrollContainerRef.current.scrollLeft
 			const pageWidth = scrollContainerRef.current.clientWidth
@@ -33,6 +27,12 @@ export default function AuthedRootPage({ sessionData }: { sessionData: SessionDa
 				setActiveIndex(newIndex)
 			}
 		}
+	}, [activeIndex])
+
+	const scrollIntoPageWithIndex = (index: number) => {
+		if (pageRefs[index]?.current) {
+			pageRefs[index].current.scrollIntoView({ behavior: 'smooth', inline: 'center' })
+		}
 	}
 
 	useEffect(
@@ -40,7 +40,7 @@ export default function AuthedRootPage({ sessionData }: { sessionData: SessionDa
 			if (scrollContainerRef.current) {
 				scrollContainerRef.current.addEventListener('scroll', handleScroll)
 			}
-		}, []
+		}, [handleScroll]
 	)
 
 	const navIcons = [<Newspaper key={0} />, <Speech key={1} />, <Plus key={2} />, <Search key={3} />, <User key={4} />]
