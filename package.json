@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@apollo/client": "^3.11.8",
-    "franken-ui": "^0.2.0",
     "graphql-ws": "^5.16.0",
     "iron-session": "^8.0.3",
     "lucide-react": "^0.439.0",
