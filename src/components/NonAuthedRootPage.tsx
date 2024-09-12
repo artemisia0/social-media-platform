@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button'
 import SignInButton from '@/components/SignInButton'
+import SignUpButton from '@/components/SignUpButton'
 
 
 export default function NonAuthedRootPage() {
@@ -10,9 +10,7 @@ export default function NonAuthedRootPage() {
 			</span>
 			<div className="flex items-center gap-6">
 				<SignInButton />
-				<Button>
-					Sign Up
-				</Button>
+				<SignUpButton />
 			</div>
 		</div>
 	)

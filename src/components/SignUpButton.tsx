@@ -3,9 +3,9 @@ import {
   Dialog,
   DialogContent,
   DialogFooter,
+	DialogDescription,
   DialogHeader,
   DialogTitle,
-	DialogDescription,
   DialogTrigger,
 	DialogClose,
 } from "@/components/ui/dialog"
@@ -17,42 +17,40 @@ import { useMutation, gql } from '@apollo/client'
 import { LoaderIcon } from 'lucide-react'
 
 
-const signInMutation = gql`
-mutation SignIn($username: String!, $password: String!) {
-	signIn(username: $username, password: $password) {
+const signUpMutation = gql`
+mutation SignUp($username: String!, $password: String!) {
+	signUp(username: $username, password: $password) {
 		status {
 			ok
 			message
 		}
-		sessionToken
 	}
 }
 `
 
-export default function SignInButton() {
-	const [signIn, signInResponse] = useMutation(signInMutation)
+export default function SignUpButton() {
+	const [signUp, signUpResponse] = useMutation(signUpMutation)
 	const [errorMessage, setErrorMessage] = useState<string | null>(null)
 	const usernameInputRef = useRef<HTMLInputElement | null>(null)
 	const passwordInputRef = useRef<HTMLInputElement | null>(null)
+	const secondPasswordInputRef = useRef<HTMLInputElement | null>(null)
 
 	const onSubmit = () => {
 		const username = usernameInputRef.current?.value ?? ''
 		const password = passwordInputRef.current?.value ?? ''
-		signIn({
+		const secondPassword = secondPasswordInputRef.current?.value ?? ''
+		if (password !== secondPassword) {
+			setErrorMessage('Provided passwords are not equal.')
+			return
+		}
+		signUp({
 			variables: {
 				username,
 				password,
 			}
 		}).then(
-				(res) => {
+				() => {
 					setErrorMessage(null)
-					const tok = res.data?.signIn?.sessionToken
-					if (tok) {
-						localStorage.setItem('sessionToken', tok!)
-						window.location.reload()
-					} else {
-						setErrorMessage(`Error: 'sessionToken' is null thus failed to sign in.`)
-					}
 				},
 				(err) => {
 					console.error(err)
@@ -62,8 +60,8 @@ export default function SignInButton() {
 	}
 
 	let gqlErrors: ReactElement[] = []
-	if (signInResponse?.error?.graphQLErrors) {
-		gqlErrors = signInResponse.error.graphQLErrors.map(
+	if (signUpResponse?.error?.graphQLErrors) {
+		gqlErrors = signUpResponse.error.graphQLErrors.map(
 			({ message }, i) => (<li className="text-destructive-foreground " key={i}>{message}</li>)
 		)
 	}
@@ -72,21 +70,21 @@ export default function SignInButton() {
 		<Dialog>
 			<DialogTrigger asChild>
 				<Button variant="outline">
-					Sign In
+					Sign Up
 				</Button>
 			</DialogTrigger>
 			<DialogContent className="dark bg-background text-foreground max-w-96">
 				<DialogHeader>
 					<DialogTitle>
-						Sign In
+						Sign Up
 					</DialogTitle>
 					<DialogDescription>
-						Please provide all the neccessary credentials below to sign into your account.
+						Please provide all the neccessary credentials below to create a new account. Passwords must be the same.
 					</DialogDescription>
 					<div className="my-4 text-sm">
-						{signInResponse.data?.signIn?.status?.ok === false &&
+						{signUpResponse.data?.signUp?.status?.ok === false &&
 							<div className="text-destructive-foreground mt-2">
-								{signInResponse.data?.signIn?.status?.message}
+								{signUpResponse.data?.signUp?.status?.message}
 							</div>
 						}
 						{gqlErrors.length > 0 &&
@@ -99,7 +97,7 @@ export default function SignInButton() {
 								{errorMessage}
 							</div>
 						}
-						{signInResponse.loading &&
+						{signUpResponse.loading &&
 							<div className="flex items-center justify-center mt-2">
 								<LoaderIcon className="animate-spin" />
 							</div>
@@ -109,6 +107,7 @@ export default function SignInButton() {
 				<div className="flex flex-col gap-2">
 					<Input placeholder="Username" ref={usernameInputRef} />
 					<Input placeholder="Password" type="password" ref={passwordInputRef} />
+					<Input placeholder="Password (again)" type="password" ref={secondPasswordInputRef} />
 				</div>
 				<DialogFooter className="w-full flex flex-row items-center justify-end gap-2">
 					<DialogClose asChild>
@@ -117,7 +116,7 @@ export default function SignInButton() {
 						</Button>
 					</DialogClose>
 					<Button type="submit" variant="outline" onClick={onSubmit}>
-						Sign In
+						Sign Up
 					</Button>
 				</DialogFooter>
 			</DialogContent>
