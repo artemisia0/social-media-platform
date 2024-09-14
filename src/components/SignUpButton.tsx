@@ -15,11 +15,12 @@ import { useRef, useState, ReactElement } from 'react'
 import { useMutation, gql } from '@apollo/client'
 
 import { LoaderIcon } from 'lucide-react'
+import hasAtLeastNYears from '@/lib/hasAtLeastNYears'
 
 
 const signUpMutation = gql`
-mutation SignUp($username: String!, $password: String!) {
-	signUp(username: $username, password: $password) {
+mutation SignUp($username: String!, $password: String!, $birthDate: String!) {
+	signUp(username: $username, password: $password, birthDate: $birthDate) {
 		status {
 			ok
 			message
@@ -34,11 +35,30 @@ export default function SignUpButton() {
 	const usernameInputRef = useRef<HTMLInputElement | null>(null)
 	const passwordInputRef = useRef<HTMLInputElement | null>(null)
 	const secondPasswordInputRef = useRef<HTMLInputElement | null>(null)
+	const birthDateInputRef = useRef<HTMLInputElement | null>(null)
 
 	const onSubmit = () => {
 		const username = usernameInputRef.current?.value ?? ''
 		const password = passwordInputRef.current?.value ?? ''
 		const secondPassword = secondPasswordInputRef.current?.value ?? ''
+		const birthDate = new Date(birthDateInputRef.current?.value ?? '')
+		if (!birthDate) {
+			setErrorMessage('Incorrect birth date.')
+			return
+		}
+		if (!hasAtLeastNYears(birthDate, 12)) {
+			setErrorMessage('User must be at least 12 years old.')
+			return
+		}
+		if (password.length < 8) {
+			setErrorMessage('Password length must be at least 8 characters.')
+			return
+		}
+		if (username.length < 8) {
+			setErrorMessage('Username length must be at least 8 characters.')
+			return
+		}
+		// check password strength
 		if (password !== secondPassword) {
 			setErrorMessage('Provided passwords are not equal.')
 			return
@@ -47,6 +67,7 @@ export default function SignUpButton() {
 			variables: {
 				username,
 				password,
+				birthDate,
 			}
 		}).then(
 				() => {
@@ -108,6 +129,7 @@ export default function SignUpButton() {
 					<Input placeholder="Username" ref={usernameInputRef} />
 					<Input placeholder="Password" type="password" ref={passwordInputRef} />
 					<Input placeholder="Password (again)" type="password" ref={secondPasswordInputRef} />
+					<Input placeholder="Your birth date" type="date" ref={birthDateInputRef} />
 				</div>
 				<DialogFooter className="w-full flex flex-row items-center justify-end gap-2">
 					<DialogClose asChild>
