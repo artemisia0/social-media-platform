@@ -30,7 +30,7 @@ export default function RootPage({ defaultSessionToken }: { defaultSessionToken:
 					)
 				}
 			}
-		}, []
+		}, [setSessionToken, setSessionData]
 	)
 
 	const gqlClient = createGqlClient(sessionToken ?? defaultSessionToken)
@@ -39,7 +39,7 @@ export default function RootPage({ defaultSessionToken }: { defaultSessionToken:
 		<ApolloProvider client={gqlClient}>
 			<div className={darkTheme ? 'dark bg-background text-foreground' : ' '}>
 				{sessionData.username
-					? <AuthedRootPage sessionData={sessionData} />
+					? <AuthedRootPage />
 					: <NonAuthedRootPage />
 				}
 			</div>

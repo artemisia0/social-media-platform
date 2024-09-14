@@ -1,9 +1,7 @@
-import type SessionData from '@/types/SessionData'
 
-
-export default function FindUserPage({ sessionData }: { sessionData: SessionData }) {
+export default function FindUserPage() {
 	return (
-		<span>{"FindUserPage" + sessionData.username}</span>
+		<span>{"FindUser"}</span>
 	)
 }
 

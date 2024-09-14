@@ -1,9 +1,7 @@
-import type SessionData from '@/types/SessionData'
 
-
-export default function ChatsPage({ sessionData }: { sessionData: SessionData }) {
+export default function ChatsPage() {
 	return (
-		<span>{"ChatsPage" + sessionData.username}</span>
+		<span>{"Chats"}</span>
 	)
 }
 

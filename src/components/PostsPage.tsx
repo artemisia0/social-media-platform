@@ -1,9 +1,7 @@
-import type SessionData from '@/types/SessionData'
 
-
-export default function PostsPage({ sessionData }: { sessionData: SessionData }) {
+export default function PostsPage() {
 	return (
-		<span>{"PostsPage" + sessionData.username}</span>
+		<span>{"Posts"}</span>
 	)
 }
 

@@ -3,12 +3,11 @@ import ChatsPage from '@/components/ChatsPage'
 import NewPostPage from '@/components/NewPostPage'
 import FindUserPage from '@/components/FindUserPage'
 import MyProfilePage from '@/components/MyProfilePage'
-import { Newspaper, Speech, Plus, Search, User } from 'lucide-react'
-import type SessionData from '@/types/SessionData'
+import { Newspaper, MessageCircle, Plus, Search, User } from 'lucide-react'
 import { ReactElement, useCallback, useState, useRef, useEffect } from 'react'
 
 
-export default function AuthedRootPage({ sessionData }: { sessionData: SessionData }) {
+export default function AuthedRootPage() {
 	const [activeIndex, setActiveIndex] = useState<number>(0)
 
 	const scrollContainerRef = useRef<HTMLDivElement | null>(null)
@@ -46,14 +45,14 @@ export default function AuthedRootPage({ sessionData }: { sessionData: SessionDa
 		}, [handleScroll]
 	)
 
-	const navIcons = [<Newspaper key={0} />, <Speech key={1} />, <Plus key={2} />, <Search key={3} />, <User key={4} />]
+	const navIcons = [<Newspaper key={0} />, <MessageCircle key={1} />, <Plus key={2} />, <Search key={3} />, <User key={4} />]
 
 	const pageElements = [
-		<PostsPage sessionData={sessionData} key={0} />,
-		<ChatsPage sessionData={sessionData} key={1} />,
-		<NewPostPage sessionData={sessionData} key={2} />,
-		<FindUserPage sessionData={sessionData} key={3} />,
-		<MyProfilePage sessionData={sessionData} key={4} />
+		<PostsPage key={0} />,
+		<ChatsPage key={1} />,
+		<NewPostPage key={2} />,
+		<FindUserPage key={3} />,
+		<MyProfilePage key={4} />
 	]
 
 	return (
@@ -61,7 +60,7 @@ export default function AuthedRootPage({ sessionData }: { sessionData: SessionDa
 			<div className="flex justify-evenly items-center absolute left-1/2 bottom-0 transform -translate-x-1/2 max-w-[640px] p-4 w-full">
 				{navIcons.map(
 					(icon: ReactElement, index: number) => (
-						<button key={index} className={'rounded-full h-10 w-10 transition-all duration-700 ease-in-out flex justify-center items-center ' + (activeIndex === index ? ' font-bold text-lg bg-blue-100' : '')} onClick={() => scrollIntoPageWithIndex(index)}>
+						<button key={index} className={'rounded-full h-10 w-10 transition-all duration-700 ease-in-out flex justify-center items-center ' + (activeIndex === index ? ' font-bold text-lg bg-zinc-600' : '')} onClick={() => scrollIntoPageWithIndex(index)}>
 							{icon}
 						</button>
 					)
