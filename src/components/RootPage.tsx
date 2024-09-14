@@ -22,15 +22,20 @@ export default function RootPage({ defaultSessionToken }: { defaultSessionToken:
 			if (localStorage) {
 				const tok = localStorage.getItem('sessionToken')
 				if (tok) {
-					getSessionData(tok!).then(
-						(res) => {
-							setSessionToken(tok!)
-							setSessionData(res)
-						}
-					)
+					setSessionToken(tok!)
 				}
 			}
-		}, [setSessionToken, setSessionData]
+		}, [setSessionToken]
+	)
+
+	useEffect(
+		() => {
+			if (sessionToken) {
+				getSessionData(sessionToken!).then(
+					(res) => setSessionData(res)
+				)
+			}
+		}, [sessionToken, setSessionData]
 	)
 
 	const gqlClient = createGqlClient(sessionToken ?? defaultSessionToken)

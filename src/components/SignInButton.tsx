@@ -17,10 +17,7 @@ import { useMutation, gql } from '@apollo/client'
 import { LoaderIcon } from 'lucide-react'
 
 import { useSetAtom } from 'jotai'
-import sessionDataAtom from '@/atoms/sessionDataAtom'
 import sessionTokenAtom from '@/atoms/sessionTokenAtom'
-
-import { getSessionData } from '@/actions/session'
 
 
 const signInMutation = gql`
@@ -40,7 +37,6 @@ export default function SignInButton() {
 	const [errorMessage, setErrorMessage] = useState<string | null>(null)
 	const usernameInputRef = useRef<HTMLInputElement | null>(null)
 	const passwordInputRef = useRef<HTMLInputElement | null>(null)
-	const setSessionData = useSetAtom(sessionDataAtom)
 	const setSessionToken = useSetAtom(sessionTokenAtom)
 
 	const onSubmit = () => {
@@ -59,12 +55,7 @@ export default function SignInButton() {
 						if (localStorage) {
 							localStorage.setItem('sessionToken', tok!)
 						}
-						getSessionData(tok!).then(
-							(res) => {
-								setSessionToken(tok!)
-								setSessionData(res)
-							}
-						)
+						setSessionToken(tok!)
 					}
 				},
 				(err) => {

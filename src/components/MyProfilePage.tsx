@@ -4,10 +4,17 @@ import { Settings, Undo2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import MyProfilePageWhenSettingsOpened from '@/components/MyProfilePageWhenSettingsOpened'
 import MyProfilePageWhenSettingsClosed from '@/components/MyProfilePageWhenSettingsClosed'
+import { useEffect } from 'react'
 
 
 export default function MyProfilePage() {
 	const [isMyProfilePageSettingsOpened, setIsMyProfilePageSettingsOpened] = useAtom(isMyProfilePageSettingsOpenedAtom)
+
+	useEffect(
+		() => {
+			setIsMyProfilePageSettingsOpened(false)
+		}, []
+	)
 
 	return (
 		<div className="relative h-dvh w-full">
