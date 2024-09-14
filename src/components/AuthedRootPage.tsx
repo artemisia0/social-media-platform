@@ -9,13 +9,16 @@ import { ReactElement, useCallback, useState, useRef, useEffect } from 'react'
 
 
 export default function AuthedRootPage({ sessionData }: { sessionData: SessionData }) {
-	const [activeIndex, setActiveIndex] = useState<null | number>(null)
+	const [activeIndex, setActiveIndex] = useState<number>(0)
+
 	const scrollContainerRef = useRef<HTMLDivElement | null>(null)
+
 	const postsPageRef = useRef<HTMLDivElement | null>(null)
 	const chatsPageRef = useRef<HTMLDivElement | null>(null)
 	const newPostPageRef = useRef<HTMLDivElement | null>(null)
 	const findUserPageRef = useRef<HTMLDivElement | null>(null)
 	const myProfilePageRef = useRef<HTMLDivElement | null>(null)
+
 	const pageRefs = [postsPageRef, chatsPageRef, newPostPageRef, findUserPageRef, myProfilePageRef]
 
 	const handleScroll = useCallback(() => {

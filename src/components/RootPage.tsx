@@ -1,36 +1,33 @@
 'use client'
 
-import { getSessionData } from '@/actions/session'
-import type SessionData from '@/types/SessionData'
 import { ApolloProvider } from '@apollo/client'
 import createGqlClient from '@/graphql/createGqlClient'
-import { useEffect, useState } from 'react'
 import AuthedRootPage from '@/components/AuthedRootPage'
 import NonAuthedRootPage from '@/components/NonAuthedRootPage'
 import darkThemeAtom from '@/atoms/darkThemeAtom'
-import { useAtomValue } from 'jotai'
+import { useAtomValue, useAtom } from 'jotai'
+import sessionDataAtom from '@/atoms/sessionDataAtom'
+import sessionTokenAtom from '@/atoms/sessionTokenAtom'
+import { useEffect } from 'react'
+import { getSessionData } from '@/actions/session'
 
 
 export default function RootPage({ defaultSessionToken }: { defaultSessionToken: string; }) {
-	const [sessionToken, setSessionToken] = useState<string | undefined>(undefined)
-	const [sessionData, setSessionData] = useState<SessionData>({
-		username: undefined,
-		userRole: undefined,
-	})
 	const darkTheme = useAtomValue(darkThemeAtom)
+	const [sessionData, setSessionData] = useAtom(sessionDataAtom)
+	const [sessionToken, setSessionToken] = useAtom(sessionTokenAtom)
 
 	useEffect(
 		() => {
-			if (window?.localStorage != undefined) {
+			if (localStorage) {
 				const tok = localStorage.getItem('sessionToken')
-				if (tok != undefined) {
-					setSessionToken(tok!)
-					getSessionData(tok!)
-						.then(
-							(res) => {
-								setSessionData(res)
-							}
-						)
+				if (tok) {
+					getSessionData(tok!).then(
+						(res) => {
+							setSessionToken(tok!)
+							setSessionData(res)
+						}
+					)
 				}
 			}
 		}, []
@@ -40,7 +37,7 @@ export default function RootPage({ defaultSessionToken }: { defaultSessionToken:
 
 	return (
 		<ApolloProvider client={gqlClient}>
-			<div className={darkTheme ? 'dark' : ' '}>
+			<div className={darkTheme ? 'dark bg-background text-foreground' : ' '}>
 				{sessionData.username
 					? <AuthedRootPage sessionData={sessionData} />
 					: <NonAuthedRootPage />

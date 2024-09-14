@@ -16,6 +16,12 @@ import { useMutation, gql } from '@apollo/client'
 
 import { LoaderIcon } from 'lucide-react'
 
+import { useSetAtom } from 'jotai'
+import sessionDataAtom from '@/atoms/sessionDataAtom'
+import sessionTokenAtom from '@/atoms/sessionTokenAtom'
+
+import { getSessionData } from '@/actions/session'
+
 
 const signInMutation = gql`
 mutation SignIn($username: String!, $password: String!) {
@@ -34,6 +40,8 @@ export default function SignInButton() {
 	const [errorMessage, setErrorMessage] = useState<string | null>(null)
 	const usernameInputRef = useRef<HTMLInputElement | null>(null)
 	const passwordInputRef = useRef<HTMLInputElement | null>(null)
+	const setSessionData = useSetAtom(sessionDataAtom)
+	const setSessionToken = useSetAtom(sessionTokenAtom)
 
 	const onSubmit = () => {
 		const username = usernameInputRef.current?.value ?? ''
@@ -48,10 +56,15 @@ export default function SignInButton() {
 					setErrorMessage(null)
 					const tok = res.data?.signIn?.sessionToken
 					if (tok) {
-						localStorage.setItem('sessionToken', tok!)
-						window.location.reload()
-					} else {
-						setErrorMessage(`Error: 'sessionToken' is null thus failed to sign in.`)
+						if (localStorage) {
+							localStorage.setItem('sessionToken', tok!)
+						}
+						getSessionData(tok!).then(
+							(res) => {
+								setSessionToken(tok!)
+								setSessionData(res)
+							}
+						)
 					}
 				},
 				(err) => {
