@@ -13,7 +13,7 @@ export default function MyProfilePage() {
 	useEffect(
 		() => {
 			setIsMyProfilePageSettingsOpened(false)
-		}, []
+		}, [setIsMyProfilePageSettingsOpened]
 	)
 
 	return (

@@ -25,7 +25,7 @@ export default function MyProfilePageWhenSettingsOpened() {
 
 	const onSignOut = () => {
 		if (localStorage) {
-			localStorage.setItem('sessionToken', undefined)
+			localStorage.setItem('sessionToken', '')
 		}
 		signOut().then(
 			(res) => {

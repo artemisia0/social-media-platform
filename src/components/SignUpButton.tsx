@@ -20,6 +20,9 @@ import hasAtLeastNYears from '@/lib/hasAtLeastNYears'
 
 import zxcvbn from 'zxcvbn'
 
+import { useSetAtom } from 'jotai'
+import sessionTokenAtom from '@/atoms/sessionTokenAtom'
+
 
 const signUpMutation = gql`
 mutation SignUp($username: String!, $password: String!, $birthDate: String!) {
@@ -32,14 +35,24 @@ mutation SignUp($username: String!, $password: String!, $birthDate: String!) {
 }
 `
 
+const signInMutation = gql`
+mutation SignIn($username: String!, $password: String!) {
+	signIn(username: $username, password: $password) {
+		sessionToken
+	}
+}
+`
+
 export default function SignUpButton() {
 	const [signUp, signUpResponse] = useMutation(signUpMutation)
+	const [signIn] = useMutation(signInMutation)
 	const [errorMessage, setErrorMessage] = useState<string | null>(null)
 	const usernameInputRef = useRef<HTMLInputElement | null>(null)
 	const secondPasswordInputRef = useRef<HTMLInputElement | null>(null)
 	const birthDateInputRef = useRef<HTMLInputElement | null>(null)
 	const [passwordValue, setPasswordValue] = useState('')
-	const [passwordStrength, setPasswordStrength] = useState<any>(null)
+	const [passwordStrength, setPasswordStrength] = useState<zxcvbn.ZXCVBNResult | null>(null)
+	const setSessionToken = useSetAtom(sessionTokenAtom)
 
 	const onPasswordValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const password = event.target.value
@@ -86,6 +99,23 @@ export default function SignUpButton() {
 		}).then(
 				() => {
 					setErrorMessage(null)
+					signIn({
+						variables: {
+							username,
+							password,
+						}
+					}).then(
+							(res) => {
+								const tok = res.data.signIn.sessionToken
+								if (!tok) {
+									throw new Error('Weird error: failed to sign in just right after signing up: sessionToken is invalid.')
+								}
+								if (localStorage) {
+									localStorage.setItem('sessionToken', tok!)
+								}
+								setSessionToken(tok!)
+							}
+						)
 				},
 				(err) => {
 					console.error(err)

@@ -1,7 +1,7 @@
 
-export default function hasAtLeastNYears(birthDate: string, nYears: number) {
+export default function hasAtLeastNYears(birthDate: Date, nYears: number) {
 	const today = new Date()
-	const twelveYearsAgo = new Date(today.getFullYear() - 12, today.getMonth(), today.getDate())
+	const twelveYearsAgo = new Date(today.getFullYear() - nYears, today.getMonth(), today.getDate())
 	return birthDate <= twelveYearsAgo
 }
 
