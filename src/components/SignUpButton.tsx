@@ -56,6 +56,9 @@ export default function SignUpButton() {
 
 	const onPasswordValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const password = event.target.value
+		if (password.length > 40) {
+			return
+		}
 		setPasswordValue(password)
 		setPasswordStrength(zxcvbn(password))
 	}
@@ -65,6 +68,14 @@ export default function SignUpButton() {
 		const password = passwordValue
 		const secondPassword = secondPasswordInputRef.current?.value ?? ''
 		const birthDate = new Date(birthDateInputRef.current?.value ?? '')
+		if (username.length > 30) {
+			setErrorMessage('Username must not be more than 30 characters long.')
+			return
+		}
+		if (password.length > 40) {
+			setErrorMessage('Password must not be more than 40 characters long.')
+			return
+		}
 		if (!passwordStrength || passwordStrength.score !== 4) {
 			setErrorMessage('Password is too easy to hack. Indicator must be green.')
 			return
@@ -174,7 +185,7 @@ export default function SignUpButton() {
 					<Input placeholder="Password" type="password" onChange={onPasswordValueChange} value={passwordValue} />
 					{passwordStrength && (
 							<div className="flex flex-col items-center gap-1 my-1">
-								<Progress value={passwordStrength.score * 25} className={['*:bg-red-900', '*:bg-red-600', '*:bg-yellow-600', '*:bg-teal-600', '*:bg-green-600'][passwordStrength.score] + ' w-[95%]'} />
+								<Progress value={(passwordStrength.score+1) * 20} className={['*:bg-red-600', '*:bg-orange-600', '*:bg-yellow-600', '*:bg-blue-600', '*:bg-green-600'][passwordStrength.score] + ' w-[95%]'} />
 								{passwordStrength.feedback.warning && (
 										<p className="text-sm text-destructive-foreground">
 											{passwordStrength.feedback.warning}
