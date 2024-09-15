@@ -17,7 +17,7 @@ export default function MyProfilePage() {
 	)
 
 	return (
-		<div className="relative h-dvh w-full">
+		<div className="relative h-dvh w-full flex justify-center">
 			<Button className="flex justify-center items-center rounded-full btn btn-default absolute top-5 right-5" variant="outline" onClick={() => setIsMyProfilePageSettingsOpened(!isMyProfilePageSettingsOpened)}>
 				{
 					isMyProfilePageSettingsOpened ? (
