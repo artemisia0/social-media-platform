@@ -60,7 +60,7 @@ export default function AuthedRootPage() {
 			<div className="flex justify-evenly items-center absolute left-1/2 bottom-0 transform -translate-x-1/2 max-w-[640px] p-4 w-full">
 				{navIcons.map(
 					(icon: ReactElement, index: number) => (
-						<button key={index} className={'rounded-full h-10 w-10 transition-all duration-700 ease-in-out flex justify-center items-center ' + (activeIndex === index ? ' font-bold text-lg bg-zinc-600' : '')} onClick={() => scrollIntoPageWithIndex(index)}>
+						<button key={index} className={'rounded-full h-10 w-10 transition-all duration-1000 ease-in-out flex justify-center items-center ' + (activeIndex === index ? ' font-bold text-lg text-zinc-900 bg-slate-100' : '')} onClick={() => scrollIntoPageWithIndex(index)}>
 							{icon}
 						</button>
 					)

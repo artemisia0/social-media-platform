@@ -42,7 +42,7 @@ export default function RootPage({ defaultSessionToken }: { defaultSessionToken:
 
 	return (
 		<ApolloProvider client={gqlClient}>
-			<div className={darkTheme ? 'dark bg-background text-foreground' : ' '}>
+			<div className={darkTheme ? 'dark bg-zinc-900 text-slate-100' : ' '}>
 				{sessionData.username
 					? <AuthedRootPage />
 					: <NonAuthedRootPage />
