@@ -26,8 +26,8 @@ import EditAvatarButton from '@/components/EditAvatarButton'
 
 
 const editProfileMutation = gql`
-mutation EditProfile($username: String!, $firstName: String, $lastName: String, $city: String, $countryCode: String, $countryLabel: String, $birthDate: String) {
-	editProfile(username: $username, firstName: $firstName, lastName: $lastName, city: $city, countryCode: $countryCode, countryLabel: $countryLabel, birthDate: $birthDate) {
+mutation EditProfile($username: String!, $firstName: String, $lastName: String, $city: String, $countryCode: String, $countryLabel: String, $birthDate: String, $avatar: String) {
+	editProfile(username: $username, firstName: $firstName, lastName: $lastName, city: $city, countryCode: $countryCode, countryLabel: $countryLabel, birthDate: $birthDate, avatar: $avatar) {
 		status {
 			ok
 			message
@@ -82,9 +82,6 @@ export default function EditProfileButton() {
 	)
 
 	const onSubmit = () => {
-
-		// use croppedAvatar somewhere here (maybe host it somewhere...)
-
 		const inputValues = {
 			username: 	sessionData.username,
 			firstName: 	firstNameInputValue,
@@ -93,6 +90,7 @@ export default function EditProfileButton() {
 			birthDate: 	birthDateInputValue,
 			countryCode,
 			countryLabel,
+			avatar: croppedAvatar,
 		}
 		editProfile({
 			variables: {

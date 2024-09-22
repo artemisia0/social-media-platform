@@ -17,6 +17,7 @@ query UserData($username: String!) {
 			countryLabel
 			city
 			signingUpDate
+			avatar
 		}
 	}
 }
@@ -42,10 +43,11 @@ export default function MyProfileHeader() {
 	const lastName = userDataResponse.data?.userData?.result?.lastName
 	const username = sessionData.username
 	const firstName = userDataResponse.data?.userData?.result?.firstName 
+	const avatar = userDataResponse.data?.userData?.result?.avatar
 
 	return (
 		<div className="flex flex-col items-center sm:flex-row gap-4">
-			<img width={100} height={100} alt="My profile image" src='https://as2.ftcdn.net/v2/jpg/04/99/21/79/1000_F_499217988_MhtA1re4Jq5BNQuuQLwLhbiGUlKoEtTB.jpg' className="rounded-full" />
+			<img width={100} height={100} alt="My profile image" src={avatar ? avatar : 'https://as2.ftcdn.net/v2/jpg/04/99/21/79/1000_F_499217988_MhtA1re4Jq5BNQuuQLwLhbiGUlKoEtTB.jpg'} className="rounded-full" />
 			<div className="flex flex-col gap-2 justify-center text-sm">
 				<div className="flex items-center gap-2">
 					<span className="flex items-center gap-1">
