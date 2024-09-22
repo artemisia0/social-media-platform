@@ -1,10 +1,9 @@
 import { Select, SelectItem, SelectTrigger, SelectContent, SelectValue } from "@/components/ui/select";
-import { useState, useMemo } from 'react'
+import { useMemo } from 'react'
 import countryList from 'react-select-country-list'
-import { Input } from '@/components/ui/input'
 
 
-export default function CountrySelector({ setCountryCode, countryCode, setCountryLabel }: { setCountryCode: any; countryCode: any; setCountryLabel: any; }) {
+export default function CountrySelector({ setCountryCode, setCountryLabel, countryCode }: { setCountryCode: any; setCountryLabel: any; countryCode: string; }) {
 	const countries = useMemo(() => countryList().getData(), [])
 
 	const handleCountyChange = (value: any) => {
@@ -14,7 +13,7 @@ export default function CountrySelector({ setCountryCode, countryCode, setCountr
 	}
 
 	return (
-		<Select onValueChange={handleCountyChange}>
+		<Select value={countryCode} onValueChange={handleCountyChange}>
 			<SelectTrigger>
 				<SelectValue placeholder='Choose a country' />
 			</SelectTrigger>

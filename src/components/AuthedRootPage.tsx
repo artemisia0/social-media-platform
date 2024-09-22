@@ -22,9 +22,27 @@ export default function AuthedRootPage() {
 
 	useEffect(
 		() => {
-			setActiveIndex(0)
-			scrollIntoPageWithIndex(0)
+			let i = 0
+			if (window && window.location) {
+				const queryString = window.location.search
+				const urlParams = new URLSearchParams(queryString)
+				const pageIndexParamValue = urlParams.get('pageIndex')
+				if (pageIndexParamValue) {
+					i = parseInt(pageIndexParamValue)
+				}
+			}
+			setActiveIndex(i)
+			scrollIntoPageWithIndex(i)
 		}, []
+	)
+
+	useEffect(
+		() => {
+			const url = new URL(window.location.href);
+			const params = new URLSearchParams(url.search);
+			params.set('pageIndex', activeIndex.toString());
+			window.history.pushState({}, '', `${url.pathname}?${params.toString()}`);
+		}, [activeIndex]
 	)
 
 	const handleScroll = useCallback(() => {

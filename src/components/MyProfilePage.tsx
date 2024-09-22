@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import MyProfilePageWhenSettingsOpened from '@/components/MyProfilePageWhenSettingsOpened'
 import MyProfilePageWhenSettingsClosed from '@/components/MyProfilePageWhenSettingsClosed'
 import { useEffect } from 'react'
+import EditProfileButton from '@/components/EditProfileButton'
 
 
 export default function MyProfilePage() {
@@ -27,6 +28,7 @@ export default function MyProfilePage() {
 					)
 				}
 			</Button>
+			<EditProfileButton />
 			{
 				isMyProfilePageSettingsOpened ? (
 					<MyProfilePageWhenSettingsOpened />
