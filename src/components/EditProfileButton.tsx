@@ -20,6 +20,9 @@ import CountrySelector from '@/components/CountrySelector'
 
 import { useAtomValue } from 'jotai'
 import sessionDataAtom from '@/atoms/sessionDataAtom'
+import croppedAvatarAtom from '@/atoms/croppedAvatarAtom'
+
+import EditAvatarButton from '@/components/EditAvatarButton'
 
 
 const editProfileMutation = gql`
@@ -65,6 +68,7 @@ export default function EditProfileButton() {
 	const closeButtonRef = useRef<HTMLButtonElement | null>(null)
 	const [countryCode, setCountryCode] = useState('')
 	const [countryLabel, setCountryLabel] = useState('')
+	const croppedAvatar = useAtomValue(croppedAvatarAtom)
 
 	useEffect(
 		() => {
@@ -78,6 +82,9 @@ export default function EditProfileButton() {
 	)
 
 	const onSubmit = () => {
+
+		// use croppedAvatar somewhere here (maybe host it somewhere...)
+
 		const inputValues = {
 			username: 	sessionData.username,
 			firstName: 	firstNameInputValue,
@@ -154,6 +161,7 @@ export default function EditProfileButton() {
 					</div>
 				</DialogHeader>
 				<div className="flex flex-col gap-2">
+					<EditAvatarButton />
 					<Input placeholder="First name" value={firstNameInputValue} onChange={(e: any) => setFirstNameInputValue(e.target.value)} />
 					<Input placeholder="Last name" value={lastNameInputValue} onChange={(e: any) => setLastNameInputValue(e.target.value)} />
 					<CountrySelector setCountryCode={setCountryCode} countryCode={countryCode} setCountryLabel={setCountryLabel} />
