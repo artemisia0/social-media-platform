@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 export default function NewPostPage() {
   const [carouselApi, setCarouselApi] = React.useState<CarouselApi | undefined>(undefined);
   const [currentCarouselItem, setCurrentCarouselItem] = React.useState(1);
+	const [itemsTextarea, setItemsTextarea] = React.useState<{ [key: number]: string; }>({});
 
   React.useEffect(() => {
     if (!carouselApi) {
@@ -29,6 +30,22 @@ export default function NewPostPage() {
 
     carouselApi.on("select", updateCarouselItem); // Update when selection changes
   }, [carouselApi]);
+
+	const onTextareaValueChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setItemsTextarea((prev) => ({
+			...prev,
+			[currentCarouselItem]: event.target.value,
+		}));
+	}
+
+	const removeCurrentPostItem = () => {
+	}
+
+	const appendPostItem = () => {
+	}
+
+	const onPost = () => {
+	}
 
   const carouselItems = [
     "https://via.placeholder.com/300x400/0000FF",
@@ -61,11 +78,11 @@ export default function NewPostPage() {
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-			<Textarea placeholder="Write something..." className="bg-zinc-600" />
+			<Textarea value={itemsTextarea[currentCarouselItem] ?? ''} onChange={onTextareaValueChange} placeholder="Write something..." className="bg-zinc-600" />
 			<div className="flex justify-center gap-2 items-center">
-				<Button><CircleMinus /></Button>
-				<Button>Post</Button>
-				<Button><CirclePlus /></Button>
+				<Button onClick={removeCurrentPostItem}><CircleMinus /></Button>
+				<Button onClick={onPost}>Post</Button>
+				<Button onClick={appendPostItem}><CirclePlus /></Button>
 			</div>
     </div>
   );
