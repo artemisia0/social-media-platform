@@ -63,7 +63,7 @@ export default function MyProfilePosts() {
 
 	// display posts
 	return (
-		<ScrollArea className="h-[420px] max-w-full">
+		<ScrollArea className="p-0 min-h-[calc(100vh-340px)] max-w-full">
 			<div className="flex flex-wrap items-center justify-center p-2 m-4 border rounded-lg border-slate-600 gap-2 max-w-full">
 				{postsData && postsData.map(
 					(postData: PostData, index) => (
