@@ -6,6 +6,7 @@ export default interface PostData {
 		usersWhoLiked: string[];
 		_id: string;
 		images: string[];
+		texts: string[];
 		createdAt: string;
 }
 

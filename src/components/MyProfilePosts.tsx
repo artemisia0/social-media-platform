@@ -1,8 +1,9 @@
-import PostCard from '@/components/PostCard';
+import PreviewPostCard from '@/components/PreviewPostCard';
 import type PostData from '@/types/PostData';
 import { gql, useQuery } from '@apollo/client';
 import { useAtomValue } from 'jotai';
 import sessionDataAtom from '@/atoms/sessionDataAtom';
+import { ScrollArea } from '@/components/ui/scroll-area'
 
 
 const postsDataQuery = gql`
@@ -13,6 +14,7 @@ query PostsData($username: String!) {
 			authorUsername
 			usersWhoLiked
 			images
+			texts
 			createdAt
 		}
 		status {
@@ -61,13 +63,15 @@ export default function MyProfilePosts() {
 
 	// display posts
 	return (
-		<div className="flex flex-wrap w-full items-center p-2 m-2 border rounded-lg border-slate-600 gap-2">
-			{postsData && postsData.map(
-				(postData: PostData, index) => (
-					<PostCard key={index} data={postData} />
-				)
-			)}
-		</div>
+		<ScrollArea className="h-[420px] max-w-full">
+			<div className="flex flex-wrap items-center justify-center p-2 m-4 border rounded-lg border-slate-600 gap-2 max-w-full">
+				{postsData && postsData.map(
+					(postData: PostData, index) => (
+						<PreviewPostCard key={index} data={postData} />
+					)
+				)}
+			</div>
+		</ScrollArea>
 	)
 }
 

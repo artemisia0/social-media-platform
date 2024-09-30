@@ -123,7 +123,7 @@ export default function EditProfileButton() {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button className="flex justify-center items-center rounded-full btn btn-default absolute top-[72px] right-5">
+				<Button variant="outline" className="flex justify-center items-center rounded-full btn btn-default absolute top-[72px] right-5">
 					<Pencil />
 				</Button>
 			</DialogTrigger>
