@@ -25,7 +25,7 @@ export default function EditPostImageButton({ disabled }: { disabled: boolean })
 
   const editorRef = useRef<AvatarEditor | null>(null); // Ref to AvatarEditor
 
-  const [fileName, setFileName] = useState<string>("Select avatar image"); // Placeholder text
+  const [fileName, setFileName] = useState<string>("Select image"); // Placeholder text
 
   // Handle file input change, open modal when file is selected
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +67,6 @@ export default function EditPostImageButton({ disabled }: { disabled: boolean })
         />
 			</div>
 
-      {/* Modal to edit/crop the avatar */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="dark bg-background text-foreground max-w-96">
           <DialogHeader>

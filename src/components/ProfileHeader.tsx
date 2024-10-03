@@ -1,3 +1,5 @@
+'use client'
+
 import { Separator } from '@/components/ui/separator'
 import { useQuery, gql } from '@apollo/client'
 import { useAtomValue } from 'jotai'
@@ -23,11 +25,10 @@ query UserData($username: String!) {
 }
 `
 
-export default function MyProfileHeader() {
-	const sessionData = useAtomValue(sessionDataAtom)
+export default function ProfileHeader({ username }: { username: string }) {
 	const userDataResponse = useQuery(userDataQuery, {
 		variables: {
-			username: sessionData.username!,
+			username,
 		}
 	})
 
@@ -41,7 +42,6 @@ export default function MyProfileHeader() {
 	const signingUpDate = userDataResponse.data?.userData?.result?.signingUpDate
 	const birthDate = userDataResponse.data?.userData?.result?.birthDate
 	const lastName = userDataResponse.data?.userData?.result?.lastName
-	const username = sessionData.username
 	const firstName = userDataResponse.data?.userData?.result?.firstName 
 	const avatar = userDataResponse.data?.userData?.result?.avatar
 

@@ -25,11 +25,10 @@ query PostsData($username: String!) {
 }
 `
 
-export default function MyProfilePosts() {
-	const sessionData = useAtomValue(sessionDataAtom)
+export default function ProfilePosts({ username }: { username: string }) {
 	const postsDataResponse = useQuery(postsDataQuery, {
 		variables: {
-			username: sessionData.username,
+			username
 		}
 	})
 
