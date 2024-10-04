@@ -1,5 +1,3 @@
-import type CommentData from '@/types/CommentData';
-
 
 export default interface PostData {
 		authorUsername: string;

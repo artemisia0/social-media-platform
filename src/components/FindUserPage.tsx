@@ -56,7 +56,7 @@ export default function FindUserPage() {
 				) : (
 					<ScrollArea className="h-[calc(100vh-100px)] w-full">
 						<div className="p-4 flex flex-col gap-2 items-center max-w-[720px]">
-							{usersData.map((userData) => (
+							{usersData.map((userData: any) => (
 								<UserPreviewCard onClick={() => setFindUserPageSelectedUsername(userData.username)} key={userData.username} data={userData} />
 							))}
 						</div>

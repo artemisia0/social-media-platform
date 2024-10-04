@@ -2,8 +2,6 @@
 
 import { Separator } from '@/components/ui/separator'
 import { useQuery, gql } from '@apollo/client'
-import { useAtomValue } from 'jotai'
-import sessionDataAtom from '@/atoms/sessionDataAtom'
 import { format } from 'date-fns'
 import { Cake } from 'lucide-react'
 

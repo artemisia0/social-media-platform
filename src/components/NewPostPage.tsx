@@ -63,12 +63,12 @@ export default function NewPostPage() {
 		}
 		const currentCarouselItemIndex = currentCarouselItem - 1;
 		setItemsTextarea((prev) => {
-			const res = {}
+			const res = {} as any
 			for (const key in prev) {
 				if (Number(key) < currentCarouselItem) {
 					res[key] = prev[key];
 				} else if (Number(key) > currentCarouselItem) {
-					res[key-1] = prev[key];
+					res[Number(key)-1] = prev[key];
 				}
 			}
 			return res
@@ -104,7 +104,7 @@ export default function NewPostPage() {
 						{carouselItems.map((item: string, index: number) => (
 							<CarouselItem key={index} className="flex justify-center">
 								<div className="w-[300px] h-[400px] relative">
-									<span className="rounded-lg backdrop-blur bg-slate-100/10 p-2 text-zinc-900 font-bold absolute top-5 right-5">
+									<span className="rounded-lg backdrop-blur bg-slate-100/80 p-2 text-zinc-900 font-bold absolute top-5 right-5">
 										{currentCarouselItem}/{carouselItems.length}
 									</span>
 												<img

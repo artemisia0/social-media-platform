@@ -11,20 +11,17 @@ import {
 } from "@/components/ui/dialog"
 import { Textarea } from "@/components/ui/textarea"
 
-import { useRef, useState, useEffect, ReactElement } from 'react'
+import { useRef } from 'react'
 
-import { LoaderIcon, Pencil, CirclePlus } from 'lucide-react'
-
-import CountrySelector from '@/components/CountrySelector'
+import { CirclePlus } from 'lucide-react'
 
 import { useAtom } from 'jotai'
-import sessionDataAtom from '@/atoms/sessionDataAtom'
 import croppedPostImageAtom from '@/atoms/croppedPostImageAtom'
 
 import EditPostImageButton from '@/components/EditPostImageButton'
 
 
-export default function AddPostButton({ loading, carouselItems, setCarouselItems, itemsTextarea, setItemsTextarea, setCurrentCarouselItem }: { loading: boolean; carouselItems: string[]; setCarouselItems: any; itemsTextarea: { [key: number]: string; }; setItemsTextarea: any; setCurrentCarouselItem: any; }) {
+export default function AddPostButton({ loading, carouselItems, setCarouselItems, itemsTextarea, setItemsTextarea }: { loading: boolean; carouselItems: string[]; setCarouselItems: any; itemsTextarea: { [key: number]: string; }; setItemsTextarea: any; }) {
 	const closeButtonRef = useRef<HTMLButtonElement | null>(null)
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null)
 	const [croppedPostImage, setCroppedPostImage] = useAtom(croppedPostImageAtom)
