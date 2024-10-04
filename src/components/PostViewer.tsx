@@ -34,9 +34,11 @@ export default function PostViewer({ data, onClose }: { data: any; onClose: any;
 
 	return (
 		<div className="flex flex-col items-center justify-center h-dvh gap-2">
-			<Button className="absolute border border-zinc-600 rounded-full top-20 left-5 hover:text-slate-100 text-slate-100 hover:bg-zinc-700 bg-zinc-800" onClick={onClose}>
-				<ArrowLeft />
-			</Button>
+			{onClose &&
+				<Button className="absolute border border-zinc-600 rounded-full top-20 left-5 hover:text-slate-100 text-slate-100 hover:bg-zinc-700 bg-zinc-800" onClick={onClose}>
+					<ArrowLeft />
+				</Button>
+			}
 			<div className="flex flex-col items-center gap-2">
 				{texts.length > 0 && (<>
 					<Carousel setApi={setCarouselApi} className="w-full max-w-xs">
