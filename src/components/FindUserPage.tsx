@@ -5,6 +5,8 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import findUserPageSelectedUsernameAtom from '@/atoms/findUserPageSelectedUsernameAtom'
 import { useAtom} from 'jotai'
 import UserProfile from '@/components/UserProfile'
+import { ArrowLeft } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 
 const usersDataQuery = gql`
@@ -42,19 +44,25 @@ export default function FindUserPage() {
 	}
 
 	return (
-		<div className="min-h-dvh w-full">
-			{findUserPageSelectedUsername}
-			{findUserPageSelectedUsername && (
-					<UserProfile username={findUserPageSelectedUsername} />
+		<div className="min-h-dvh w-full relative">
+			{findUserPageSelectedUsername
+				? (
+					<>
+						<UserProfile username={findUserPageSelectedUsername} />
+						<Button className="text-slate-100 bg-zinc-800 hover:bg-zinc-700 hover:text-slate-100 rounded-full absolute top-5 left-5 border border-slate-600 shadow" onClick={() => setFindUserPageSelectedUsername(null)}>
+							<ArrowLeft />
+						</Button>
+					</>
+				) : (
+					<ScrollArea className="h-[calc(100vh-100px)] w-full">
+						<div className="p-4 flex flex-col gap-2 items-center max-w-[720px]">
+							{usersData.map((userData) => (
+								<UserPreviewCard onClick={() => setFindUserPageSelectedUsername(userData.username)} key={userData.username} data={userData} />
+							))}
+						</div>
+					</ScrollArea>
 				)
 			}
-			<ScrollArea className="h-[calc(100vh-100px)] w-full">
-				<div className="p-4 flex flex-col gap-2 items-center max-w-[720px]">
-					{usersData.map((userData) => (
-						<UserPreviewCard onClick={() => setFindUserPageSelectedUsername(userData.username)} key={userData.username} data={userData} />
-					))}
-				</div>
-			</ScrollArea>
 		</div>
 	)
 }
