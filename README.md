@@ -44,17 +44,5 @@ See the companion repository:
 
 ---
 
-## Getting Started
-
-### Prerequisites
-- Node.js (recommended version)
-- Yarn or npm for package management
-
-### Setup
-1. Clone this repo  
-   ```bash
-   git clone https://github.com/artemisia0/social-media-platform.git
-   cd social-media-platform
-
 ## Purpose
 This project was built as a **learning and portfolio application** to practice real-time communication, full-stack development, and GraphQL integration. It is not intended for production use.
